@@ -63,11 +63,11 @@
 
 .DayPicker-Caption {
     display: table-caption;
-    .typo-undertittel();
+    margin: 0 0 0.5em 0;
+    .typo-undertittel-mixin();
     height: 2em;
     line-height: 2em;
     text-align: center;
-    margin-bottom: 0.5em;
 }
 
 .DayPicker-Weekdays {
@@ -83,7 +83,8 @@
     display: table-cell;
     padding: 0.5em;
     text-align: center;
-    .typo-element();
+    margin: 0;
+    .typo-element-mixin();
 
     abbr {
         text-decoration: none;

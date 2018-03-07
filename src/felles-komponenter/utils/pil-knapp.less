@@ -3,7 +3,11 @@
 @knapp-storrelse: 32px;
 
 .pil-knapp {
-    .knapp;
+    .knappbase-mixin(@font-family);
+    .knappramme-mixin(@navBla, @navDypBla, @white);
+    .knappdisabled-mixin();
+    .knappspinner-mixin(@navBla, @navBlaLighten60, @white, rgba(255, 255, 255, 0.5));
+
     height: @knapp-storrelse;
     width: @knapp-storrelse;
     padding: 0;

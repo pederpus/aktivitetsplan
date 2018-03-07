@@ -1,11 +1,15 @@
 .lenkeknapp,
 a.lenkeknapp {
-    .knapp;
+    .knappbase-mixin(@font-family);
+    .knappramme-mixin(@navBla, @navDypBla, @white);
+    .knappdisabled-mixin();
+    .knappspinner-mixin(@navBla, @navBlaLighten60, @white, rgba(255, 255, 255, 0.5));
     text-decoration: none;
     text-align: center;
     line-height: 1.7rem;
 
     &--hoved {
-        .knapp--hoved;
+        .knappfylt-mixin(@navBla, @white, @navDypBla, lighten(@navBla, 5%));
+        .knappspinner-mixin(@white, rgba(255, 255, 255, 0.5));
     }
 }
