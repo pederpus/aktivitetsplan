@@ -17,14 +17,16 @@ class AktivitetmalSlett extends Component {
                 ? 'aktivitetsmal.bekreft-sletting.undertittel'
                 : null;
         return (
-            <BekreftSlettVisning
-                slettAction={() => {
-                    doSlettMal();
-                }}
-                avbrytAction={() => history.push('/mal')}
-                tittelId="aktivitetsmal.bekreft-sletting.tittel"
-                undertekstId={bekrefSlettingAvMalListe}
-            />
+            <AktivitetsmalModal>
+                <BekreftSlettVisning
+                    slettAction={() => {
+                        doSlettMal();
+                    }}
+                    avbrytAction={() => history.push('/mal')}
+                    tittelId="aktivitetsmal.bekreft-sletting.tittel"
+                    undertekstId={bekrefSlettingAvMalListe}
+                />
+            </AktivitetsmalModal>
         );
     }
 }
@@ -44,6 +46,4 @@ const mapDispatchToProps = (dispatch, props) => ({
         dispatch(slettMal()).then(() => props.history.push('/mal')),
 });
 
-export default AktivitetsmalModal(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetmalSlett)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(AktivitetmalSlett);

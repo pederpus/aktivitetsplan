@@ -9,7 +9,6 @@ import Textarea from '../../felles-komponenter/skjema/textarea/textarea';
 import { autobind } from '../../utils';
 import { STATUS } from '../../ducks/utils';
 import { oppdaterMal, selectMalStatus } from './aktivitetsmal-reducer';
-import * as AppPT from '../../proptypes';
 
 const MALTEKST_MAKSLENGDE = 500;
 
@@ -24,7 +23,7 @@ class AktivitetsmalForm extends Component {
     }
 
     render() {
-        const { oppdaterer, handleSubmit, history } = this.props;
+        const { oppdaterer, handleSubmit, handleClose } = this.props;
         return (
             <form onSubmit={handleSubmit}>
                 <Textarea
@@ -43,7 +42,7 @@ class AktivitetsmalForm extends Component {
                     <FormattedMessage id="aktivitetsmal.lagre" />
                 </Hovedknapp>
                 <Knapp
-                    onClick={() => history.push('/')}
+                    onClick={handleClose}
                     disabled={oppdaterer}
                     htmlType="button"
                 >
@@ -66,9 +65,8 @@ AktivitetsmalForm.propTypes = {
     oppdaterer: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired,
     handleComplete: PT.func.isRequired,
-    history: AppPT.history.isRequired,
+    handleClose: PT.func.isRequired,
 };
-
 const AktivitetsmalReduxForm = validForm({
     form: 'aktivitetsmal-form',
     validate: {

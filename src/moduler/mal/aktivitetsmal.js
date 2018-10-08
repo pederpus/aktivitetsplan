@@ -19,8 +19,8 @@ import {
 } from '../../felles-komponenter/hidden-if/hidden-if-knapper';
 import {
     hentMal,
-    selectMalStatus,
     selectGjeldendeMal,
+    selectMalStatus,
 } from '../../moduler/mal/aktivitetsmal-reducer';
 import { selectMalListe, selectMalListeStatus } from './aktivitetsmal-selector';
 import { selectViserHistoriskPeriode } from '../filtrering/filter/filter-selector';
@@ -106,56 +106,58 @@ class AktivitetsMal extends Component {
         const historikkVises = this.state.visHistoriskeMal;
 
         return (
-            <Innholdslaster avhengigheter={avhengigheter}>
-                <section className="aktivitetmal">
-                    <div className="aktivitetmal__innhold">
-                        <ManglendeMalInformasjon
-                            hidden={harMal}
-                            historiskVisning={historiskVisning}
-                        />
-                        <Tekstomrade className="aktivitetmal__tekst">
-                            {mal || ''}
-                        </Tekstomrade>
-                        <HiddenIfHovedknapp
-                            onClick={() => history.push('mal/endre')}
-                            hidden={historiskVisning}
-                            disabled={!harSkriveTilgang}
-                        >
-                            <FormattedMessage
-                                id={
-                                    harMal
-                                        ? 'aktivitetsmal.rediger'
-                                        : 'aktivitetsmal.opprett'
-                                }
+            <AktivitetsmalModal>
+                <Innholdslaster avhengigheter={avhengigheter}>
+                    <section className="aktivitetmal">
+                        <div className="aktivitetmal__innhold">
+                            <ManglendeMalInformasjon
+                                hidden={harMal}
+                                historiskVisning={historiskVisning}
                             />
-                        </HiddenIfHovedknapp>
-                        <HiddenIfKnapp
-                            onClick={() => history.push('mal/slett/')}
-                            className="aktivitetmal__slett-knapp"
-                            hidden={!harMal || !kanSletteMal}
-                            disabled={!harSkriveTilgang}
-                        >
-                            <FormattedMessage id="aktivitetvisning.slett-knapp" />
-                        </HiddenIfKnapp>
-                    </div>
-                    <HiddenIfDiv hidden={historiskeMal.length === 0}>
-                        <hr className="aktivitetmal__delelinje" />
-                        <div className="aktivitetmal__footer">
-                            <Accordion
-                                labelId={
-                                    historikkVises
-                                        ? 'aktivitetsmal.skjul'
-                                        : 'aktivitetsmal.vis'
-                                }
-                                apen={historikkVises}
-                                onClick={this.toggleHistoriskeMal}
+                            <Tekstomrade className="aktivitetmal__tekst">
+                                {mal || ''}
+                            </Tekstomrade>
+                            <HiddenIfHovedknapp
+                                onClick={() => history.push('mal/endre')}
+                                hidden={historiskVisning}
+                                disabled={!harSkriveTilgang}
                             >
-                                {historiskeMal.map(m => malListeVisning(m))}
-                            </Accordion>
+                                <FormattedMessage
+                                    id={
+                                        harMal
+                                            ? 'aktivitetsmal.rediger'
+                                            : 'aktivitetsmal.opprett'
+                                    }
+                                />
+                            </HiddenIfHovedknapp>
+                            <HiddenIfKnapp
+                                onClick={() => history.push('mal/slett/')}
+                                className="aktivitetmal__slett-knapp"
+                                hidden={!harMal || !kanSletteMal}
+                                disabled={!harSkriveTilgang}
+                            >
+                                <FormattedMessage id="aktivitetvisning.slett-knapp" />
+                            </HiddenIfKnapp>
                         </div>
-                    </HiddenIfDiv>
-                </section>
-            </Innholdslaster>
+                        <HiddenIfDiv hidden={historiskeMal.length === 0}>
+                            <hr className="aktivitetmal__delelinje" />
+                            <div className="aktivitetmal__footer">
+                                <Accordion
+                                    labelId={
+                                        historikkVises
+                                            ? 'aktivitetsmal.skjul'
+                                            : 'aktivitetsmal.vis'
+                                    }
+                                    apen={historikkVises}
+                                    onClick={this.toggleHistoriskeMal}
+                                >
+                                    {historiskeMal.map(m => malListeVisning(m))}
+                                </Accordion>
+                            </div>
+                        </HiddenIfDiv>
+                    </section>
+                </Innholdslaster>
+            </AktivitetsmalModal>
         );
     }
 }
@@ -192,6 +194,4 @@ const mapDispatchToProps = dispatch => ({
     doFjernMalListe: () => dispatch(fjernMalListe()),
 });
 
-export default AktivitetsmalModal(
-    connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(AktivitetsMal);
